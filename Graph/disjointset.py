@@ -9,7 +9,6 @@ class DisJointSet:
     '''
     def __init__(self, graph: Graph) -> None:
         self.parents = [-1] * len(graph.nodes)
-        self.edges = []
 
     def __repr__(self) -> str:
         return json.dumps(self.parents)
@@ -31,14 +30,14 @@ class DisJointSet:
         else:
             print("Cycle detected! | {} - {}".format(node1, node2))
             return False
-nodes = range(4)
-edges = [
-    (0,1),
-    (0,3),
-    (2,3),
-    (1,2),
-]
-g = Graph(nodes, edges)
+# nodes = range(4)
+# edges = [
+#     (0,1),
+#     (0,3),
+#     (2,3),
+#     (1,2),
+# ]
+# g = Graph(nodes, edges)
 
 # ds = DisJointSet(g)
 # print(ds.findparentroot(3))
@@ -80,17 +79,17 @@ class DisjointSetsByRank:
                     self.parent[parentofnode1] = parentofnode2
             return True
         else:
+            # print(node1, node2)
             print("cycle detected")
             return False
-ds = DisjointSetsByRank(g)
-# print(ds.findparentroot(3))
+# ds = DisjointSetsByRank(g)
+# # print(ds.findparentroot(3))
 
-print(ds.union(0, 1))
-print(ds.union(0, 3))
-print(ds.union(2, 3))
-print(ds.union(1, 2))
-print(ds)
+# print(ds.union(0, 1))
+# print(ds.union(0, 3))
+# print(ds.union(2, 3))
+# print(ds.union(1, 2))
+# print(ds)
 
-        
-    
-    
+
+  
