@@ -22,6 +22,10 @@ def permutation(word, i, finallist):
     return finallist
 
 # print(permutation("ABCDE", 0, []))
+
+
+
+
 class Node:
     def __init__(self, data) -> None:
         self.data = data

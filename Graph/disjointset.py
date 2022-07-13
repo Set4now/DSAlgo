@@ -3,6 +3,8 @@ import json
 
 Graph = namedtuple("Graph", ["nodes", "edges"])
 
+
+### Naive Implementation ####
 class DisJointSet:
     '''This is the naive implementation
        Undirected graph
@@ -48,6 +50,8 @@ class DisJointSet:
 # print(ds.union(1, 2))
 # print(ds)
 
+
+### Optimized Implementation with Path compression and union by Rank ####
 class DisjointSetsByRank:
     def __init__(self, graph: Graph) -> None:
         self.parent = [-1] * len(graph.nodes)
