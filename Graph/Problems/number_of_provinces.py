@@ -26,29 +26,6 @@ def findprovinces(isconnected):
     return count
 
 
-#def countprovinces(isconnected):
-    #vertices = range(len(isconnected))
-    vertices = len(isconnected) - 1
-    visited_nodes = []
-    start_vertex = 0
-    count = 0 
-    while len(visited_nodes) != len(isconnected):
-        print(visited_nodes)
-        if isconnected[start_vertex] not in visited_nodes:
-            visited_nodes.append(start_vertex)
-            for edge in range(len(isconnected[start_vertex])):
-                if edge != start_vertex:
-                    if isconnected[start_vertex][edge] == 1:
-                        if edge not in visited_nodes:
-                            visited_nodes.append(edge)
-                            start_vertex += 1 
-                            #vertices -= 1
-            #else:
-                #vertices -= 1
-            count += 1
-    return count 
-
-
 
 isConnected = [[1,1,0],[1,1,0],[0,0,1]]
 isConnected = [[1,0,0,1],[0,1,1,0],[0,1,1,1],[1,0,1,1]]
