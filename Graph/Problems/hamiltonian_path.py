@@ -32,7 +32,7 @@ class Solution:
                     path.pop() 
                 else:
                     return True
-        # return False
+        return False
 
     def check(self, N, M, Edges):
         adj_edge_list = {}
