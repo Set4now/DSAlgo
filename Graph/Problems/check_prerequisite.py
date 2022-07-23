@@ -1,3 +1,23 @@
+# https://leetcode.com/problems/course-schedule/submissions/
+# https://practice.geeksforgeeks.org/problems/prerequisite-tasks/1
+"""
+The solution is related to topological sorting..
+Topological sorting (dependencies ) is only possible if the grah is DAG
+
+So our solution is to check if every connected components of graph if its DAG or NOT
+
+Means if there is a cycle , then task's cannot be performed in order since cyclic dependencies present
+
+Approachs
+I. departure time , d(u) < d(v) where v is already visited, means back edge, means cycle
+2. Union Find
+3. DFS
+ We use a vector visited to record all the visited nodes and 
+ another vector onpath to record the visited nodes of the current DFS visit. 
+ Once the current visit is finished, we reset the onpath value of the starting node to false
+
+"""
+
 class Solution:
     def isPossible(self,N,prerequisites):
         graph = {}
@@ -6,9 +26,9 @@ class Solution:
                 graph[node1] = [node2]
             else:
                 graph[node1].append(node2)
-        if self.isdag(graph):
-            return False
-        return True  
+        if not self.isdag(graph):
+            return True
+        return False  
 
     def dfs_calculate_depart_time(self, node, visited, time, departure, graph):
         if node not in visited:
@@ -44,8 +64,8 @@ class Solution:
                 # Note that `departure[u]` will be equal to `departure[v]`
                 # only if `u = v`, i.e., vertex contain an edge to itself
                 if departure[vertex] <= departure[edge]:
-                    return True
-        return False
+                    return False # means it has a back edge
+        return True
 
 # N = 4 
 # prerequisites  = [[1,0],[2,1],[3,2]]
