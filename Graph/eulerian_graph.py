@@ -26,7 +26,8 @@ class Graph:
     NOT Eulerian Graph:
     1. All the edges are visited
     2. But the count of nodes whose degrees are ODD are more than 2
-
+    
+    This is an exmaple for an Undirected Graph
 
     """
     def __init__(self) -> None:
