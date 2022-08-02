@@ -17,6 +17,7 @@ class Graph:
             popped = queue.pop(0)
             # enumerate(self.graph[popped]) will give edge values for each adjacent edges for the source
             for source, edgevalue in enumerate(self.graph[popped]):
+                # edgevalue > 0 means as long as the residual capacity doesn't become 0, there is a path
                 if visited[source] == False and edgevalue > 0:
                     parent_array[source] = popped
                     queue.append(source)
@@ -63,7 +64,7 @@ graph = [[0, 16, 13, 0, 0, 0],
         [0, 0, 9, 0, 0, 20],
         [0, 0, 0, 7, 0, 4],
         [0, 0, 0, 0, 0, 0]]
-        
+
 graph = [[0, 8, 0, 0, 3, 0],
          [0, 0, 9, 0, 0, 0],
          [0, 0, 0, 0, 7, 2],

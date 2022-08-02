@@ -23,6 +23,21 @@ call the bpm() for all the applicants and keep incrementing count as long as bpm
 
 
 
+Detailed explanation
+
+1.
+    Maintain an assign[] array to keep track of which job is assigned to which applicant. 
+    For instance, assign[1]=2 means job number 1 is assigned to applicant number 2.
+2.   
+    Each applicant will maintain a visited[] array to keep track of which jobs the candidate was already considered (to avoid going in loops).
+
+3.
+    For each applicant do the Depth-First Search (DFS) (to find a job). 
+        Iterate through all the jobs and for each job
+        check if applicant can do this job and applicant was never considered for this job (adjMatrix[applicant][job] == 1 && visited[job]==false), if yes then mark visited[job]==true (applicant is being considered for this job now and will not be considered again)
+        check if the job is not assigned to any other applicant (assign[job]==-1) – then assign the job to this applicant OR If the job was assigned earlier to any other applicant say ‘X’ earlier then make the recursive call for applicant ‘X’ (do another DFS) to check if some other job can be assigned applicant ‘X’ If that happens, assign this job to the current applicant and break the current loop 3a and check for the next applicant. and If this job cannot be assigned to this applicant then check for the next job.
+
+
 """
 
 
@@ -36,8 +51,9 @@ class Solution:
     def bpm(self, applicant, seen, job_applications):
         for job in range(self.jobs):
             # 1 Means the applicant is interested in that job
+            # check if applicant can do this job and applicant was never considered for this job
             if self.graph[applicant][job] == 1 and job not in seen:
-                seen.add(job)
+                seen.add(job) # applicant is being considered for this job now and will not be considered again
                 
                 """
                 the job (A) is not assigned to anyone or
@@ -58,12 +74,14 @@ class Solution:
         Applicants are numbered from 0 - (N - 1)
         Jobs are numbered from 0 - (M - 1)
 
+        job_applications[job] = applicant
 
         """
         job_applications = [-1] * self.jobs  
 
         maxmatch  = 0
         for applicant in range(self.applicants):
+            # Each applicant will maintain a seen set to keep track of which jobs the candidate was already considered (to avoid going in loops).
             seen = set()
             if self.bpm(applicant, seen, job_applications):
                 maxmatch += 1
