@@ -1,5 +1,40 @@
+"""
+
+A vertex in an undirected connected graph is an articulation point (or cut vertex) if removing it (and edges through it) disconnects the graph. Articulation points represent vulnerabilities in a connected network – single points whose failure would split the network into 2 or more components. They are useful for designing reliable networks. 
+
+For a disconnected undirected graph, 
+an articulation point is a vertex removing which increases number of connected components.
+
+Naive Approach: A simple approach is to one by one remove all vertices and see if removal of a vertex causes disconnected graph. Following are steps of simple approach for connected graph.
+
+For every vertex v, do following:
+
+Remove v from graph 
+See if the graph remains connected (We can either use BFS or DFS) 
+Add v back to the graph
+Time Complexity: O(V*(V+E)) for a graph represented using adjacency list.
+
+
+
+
+
+Efficient Approach (Using DFS) using Tarjans Algorith concept: 
+The idea is to use DFS (Depth First Search). 
+
+
+In DFS, we follow vertices in tree form called DFS tree. 
+In DFS tree, a vertex u is parent of another vertex v, if v is discovered by u (obviously v is an adjacent of u in graph). 
+
+In DFS tree, a vertex u is articulation point if one of the following two conditions is true. 
+
+u is root of DFS tree and it has at least two children. 
+u is not root of DFS tree and it has a child v such that no vertex in subtree rooted with v has a back edge to one of the ancestors (in DFS tree) of u.
+
+"""
+
+
 from collections import defaultdict
-from re import U
+
 
 
 class Graph:
@@ -52,13 +87,18 @@ class Graph:
                 if parent[node] == -1 and children > 1:
                     articulation_point[node] = True
 
-                # case 2
-                # when current node is not a root node 
-                # and there is a back edge from its descendent to any ancestor of current vertex
+
+                """
+                u is not root of DFS tree 
+                and 
+                it has a child v such that no vertex in subtree rooted with v has a back edge to one of the ancestors (in DFS tree) of u.
+                """
+                #(2) If u is not root and low value of one of its child is more
+                # than discovery value of u.
                 if parent[node] != -1 and low[v] >= disc[node]:
                     articulation_point[node] = True
 
-            elif v != parent[node]:
+            elif v != parent[node]: # Back edge
                 low[node] = min(low[node], disc[v])
         
 
