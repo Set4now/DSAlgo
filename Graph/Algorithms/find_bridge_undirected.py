@@ -1,4 +1,13 @@
 """
+
+Famous Question 
+
+Find bridge in a network ?
+or 
+Find Critical connectins in a N/W
+https://leetcode.com/problems/critical-connections-in-a-network/submissions/
+
+
 An edge in an undirected connected graph is a bridge if removing it disconnects the graph. 
 
 For a disconnected undirected graph, definition is similar, 
@@ -94,6 +103,7 @@ class Graph:
                 low[node] = min(low[node], disc[v])
     
     def get_bridges(self):
+        print(self.graph)   
         brides = []
 
         parent = [-1] * self.v 
@@ -110,22 +120,38 @@ class Graph:
 
         print(brides)
 
-g1 = Graph(5)
-g1.addEdge(1, 0)
-g1.addEdge(0, 2)
-g1.addEdge(2, 1)
-g1.addEdge(0, 3)
-g1.addEdge(3, 4)
-g1.get_bridges()
+# g1 = Graph(5)
+# g1.addEdge(1, 0)
+# g1.addEdge(0, 2)
+# g1.addEdge(2, 1)
+# g1.addEdge(0, 3)
+# g1.addEdge(3, 4)
+# g1.get_bridges()
 
 
-g3 = Graph (7)
-g3.addEdge(0, 1)
-g3.addEdge(1, 2)
-g3.addEdge(2, 0)
-g3.addEdge(1, 3)
-g3.addEdge(1, 4)
-g3.addEdge(1, 6)
-g3.addEdge(3, 5)
-g3.addEdge(4, 5)
-g3.get_bridges()
+# g3 = Graph (7)
+# g3.addEdge(0, 1)
+# g3.addEdge(1, 2)
+# g3.addEdge(2, 0)
+# g3.addEdge(1, 3)
+# g3.addEdge(1, 4)
+# g3.addEdge(1, 6)
+# g3.addEdge(3, 5)
+# g3.addEdge(4, 5)
+# g3.get_bridges()
+
+
+
+g2 = Graph(4)
+g2.addEdge(0,1)
+# g2.addEdge(1,0)
+
+g2.addEdge(1,2)
+# g2.addEdge(2,1)
+
+g2.addEdge(2, 0)
+# g2.addEdge(0,2)
+
+g2.addEdge(1,3)
+# g2.addEdge(3,1)
+g2.get_bridges()

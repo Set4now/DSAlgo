@@ -98,7 +98,7 @@ class Graph:
                 if parent[node] != -1 and low[v] >= disc[node]:
                     articulation_point[node] = True
 
-            elif v != parent[node]: # Back edge
+            elif v != parent[node]: # Back edge , We don;t consider back edge to its parent
                 low[node] = min(low[node], disc[v])
         
 
