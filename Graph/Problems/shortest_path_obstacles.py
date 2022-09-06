@@ -1,97 +1,56 @@
-from collections import defaultdict
 from typing import List
+"""
+You are given an m x n integer matrix grid where each cell is either 0 (empty) or 1 (obstacle). You can move up, down, left, or right from and to an empty cell in one step.
 
+Return the minimum number of steps to walk from the upper left corner (0, 0) to the lower right corner (m - 1, n - 1) given that you can eliminate at most k obstacles. If it is not possible to find such walk return -1.
+
+"""
 
 class Solution:
     def shortestPath(self, grid: List[List[int]], k: int) -> int:
         
-        row = len(grid)
-        col = len(grid[0])
+        rows = len(grid)
+        cols = len(grid[0])
         
-        if row == 1 and col == 1 and grid[0][0] == 0:
-            return 0
+        targetcell = ((rows - 1) , (cols - 1))
+        obstacles = k
         
-        
-        self.graph = defaultdict(list)
-        
-        for i in range(row):
-            for j in range(col):
-                if i + 1 < row:
-                    self.graph[(i,j)].append((i+1,j))
-                if j + 1 < col:
-                    self.graph[(i,j)].append((i,j+1))
-                    
-        parent, distance = self.bfs(row, col)
-        
-        
-        
-        
-        paths = []
-        last_cell = (row-1,col-1)
-        path = [last_cell]
-        
-        print(distance[last_cell])
-        #print(paths)
-        
-        self.get_paths(last_cell, path, paths, parent)
-        for path in paths:
-            countofobstacle = 0
-            for coordinates in path:
-                i,j = coordinates
-                if grid[i][j] == 1:
-                    countofobstacle += 1
-            print(countofobstacle)
-            if countofobstacle <= k:
-                return distance[last_cell]
-        return -1
-                
-                
-    
-    
-    def get_paths(self, node, path, paths, parent):
-        if not parent[node]:
-            temp = [i for i in path]
-            #temp.reverse()
-            paths.append(temp)
-
-        
-        for prev in parent[node]:
-            path.append(prev)
-            self.get_paths(prev, path, paths, parent)
-        path.pop()
-        
-        
-    def bfs(self, row, col):
-        
-        distance = {}
-        parent = {}
-        for i in range(row):
-            for j in range(col):
-                distance[(i,j)] = float("Inf")
-                parent[(i,j)] = []
-        
-        distance[(0,0)] = 0
+        if obstacles >= (rows - 1) + (cols - 1):
+            return rows + cols - 2
         
         q = []
-        q.append(
-            ((0,0))
-        )
         
-        # using BFS technique
-        # Keep updating the distance map where we store the min distance from source k to the current node
+        # start VFS from top left (0,0), intial step as 0
+        q.append((0, 0, 0, obstacles)) # steps, row, col, current_obstacles
+        
+        
+        visited = set()
+        visited.add((0,0,obstacles))
+        
         while q:
-            coordinates = q.pop(0)
+            steps, row, col, current_obstacles = q.pop(0)
             
-            for destcoordinates in self.graph[coordinates]:
-                if distance[destcoordinates] >  distance[coordinates] + 1:
-                    distance[destcoordinates] = distance[coordinates] + 1
-                    q.append((destcoordinates))
-                    parent[destcoordinates].append(coordinates)
-                elif distance[destcoordinates] ==  distance[coordinates] + 1:
-                    parent[destcoordinates].append(coordinates)
+            # we have reached the target cell which is bottom right
+            if (row, col) == targetcell:
+                return steps
+            
+            for i,j in (1,0),(0,1),(-1,0),(0,-1):
+                new_row = row + i
+                new_col = col + j
+                
+                if ( 0 <= new_row < rows ) and ( 0 <= new_col < cols ):
+                    # grid[new_row][new_col] can be either 0 or 1 
+                    new_obstacles = current_obstacles - grid[new_row][new_col]
                     
-        return parent, distance
-
+                    
+                    
+                    # if max obstacles not consumed and its not yet visited.
+                    if new_obstacles >= 0 and (new_row, new_col, new_obstacles) not in visited:
+                        visited.add((new_row,new_col,new_obstacles))
+                        q.append((steps + 1, new_row, new_col, new_obstacles))
+                        
+                        
+        return -1
 
 k=5
 grid = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]

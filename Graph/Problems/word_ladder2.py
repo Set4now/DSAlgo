@@ -46,7 +46,6 @@ class Solution:
     
     def get_paths(self, word, path, paths, parent):
         if not parent[word]:
-            #path.reverse()
             temp = [i for i in path]
             temp.reverse()
             paths.append(temp)

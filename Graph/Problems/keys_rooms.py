@@ -16,8 +16,6 @@ class Solution:
         #visited.add(0)
         
         self.dfs(0, visited)
-        
-        print(self.g)
         # print(visited)
         if len(visited) != total_nodes:
             return False
