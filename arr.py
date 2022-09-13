@@ -92,3 +92,20 @@ def unionarr(a, b):
         unionlist.extend(a[i:])
     return unionlist
 print(unionarr(a, b))
+
+
+
+
+def reverse(arr):
+    n = len(arr)
+    i = 0
+    last = len(arr) - 1
+    while i < last:
+        arr[i], arr[last] = arr[last], arr[i]
+        i += 1
+        last -= 1
+    return arr
+
+
+arr = [1,2,3,4]
+print(reverse(arr))
