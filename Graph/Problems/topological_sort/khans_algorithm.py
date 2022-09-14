@@ -33,8 +33,9 @@ class Graph:
                 self.indegree[edge] -= 1
                 if self.indegree[edge] == 0:
                     q.append(edge)
-
         return visited
+
+    
 
 g = Graph()
 g.addedge("bread", "yeast")

@@ -110,7 +110,7 @@ class Graph:
         
     def get_all_sssp(self, source):
          # the start origin disance is always 0
-        self.shorted_distance[source] = 0
+        self.shorted_distance[source] = 0 
         self.visited.add(source)
         self._get_all_sssp(source)
         return self.shorted_distance
