@@ -143,7 +143,7 @@ class Solution:
 class Solution:
     def rob(self, nums: List[int]) -> int:
 
-        # edge for inputs with just 1 item
+        # edge for inputs with just 1 item 
         if len(nums) == 1:
             return nums[0]
 

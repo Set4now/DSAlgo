@@ -35,6 +35,9 @@ and consider the first and last element are adjacent
 
 """
 
+from typing import List
+
+
 class Solution:
     def rob(self, nums: List[int]) -> int:
         if len(nums) == 1:

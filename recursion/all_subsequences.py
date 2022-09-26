@@ -46,7 +46,7 @@
 # print all subsequences in an array whose sum is equal to K
 # """
 
-# def print_subsquences_sum(index, arr, output, k, sum):
+# def print_all_subsquences_sum(index, arr, output, k, sum):
 #     if index >= len(arr):
 #         if sum == k:
 #             print(output)
@@ -55,17 +55,17 @@
 #     #pick the index
 #     output.append(arr[index])
 #     sum += arr[index]
-#     print_subsquences_sum(index + 1, arr, output, k, sum)
+#     print_all_subsquences_sum(index + 1, arr, output, k, sum)
 
 #     # don't pick the index
 #     output.remove(arr[index])
 #     sum -= arr[index]
-#     print_subsquences_sum(index + 1, arr, output, k, sum)
+#     print_all_subsquences_sum(index + 1, arr, output, k, sum)
 
 
 # # arr = [1, 2, 1]
 # # arr = [5, 2, 1, 6]
-# # print_subsquences_sum(0, arr, [], 7, 0)
+# # print_all_subsquences_sum(0, arr, [], 7, 0)
 
 
 # def print_one_subsquences_sum(index, arr, output, k, sum):
