@@ -120,11 +120,8 @@
 
 
 def print_non_adjacent_subsquences(index, arr, output):
-    print("=====")
-    print(index)
-    print(output)
     if index >= len(arr):
-        #print(f"outbound {index}")
+        print(output)
         return 
     #pick the index
     output.append(arr[index])

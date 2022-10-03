@@ -25,7 +25,7 @@ class MinHeap:
 
     def bottomup(self, keyindex):
         """
-        Recursive Max heapify function 
+        Recursive Min heapify function 
         which will keep comparing node at current index with node at its parent's index
         Swap it if its value is less than its parent ( since this is MinHeap, the parent should be smaller than the childs)
 

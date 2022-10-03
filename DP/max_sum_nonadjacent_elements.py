@@ -70,33 +70,23 @@ class Solution:
             if dp[index] != -1:
                 return dp[index]
             else:
-                pick = None
                 pick = nums[index] + sum_subsequence_not_adjacenthouse(index+2, nums, dp)
                 
-                notpick = None
                 notpick = 0 + sum_subsequence_not_adjacenthouse(index+1, nums, dp)
-                
-                if pick is not None and notpick is not None:
-                    dp[index] = max(pick, notpick)
-                    return dp[index]
-                if pick and notpick is None:
-                    dp[index] = pick
-                    return dp[index]
-                if notpick and pick is None:
-                    dp[index] = notpick
-                    return dp[index]
-                
+                dp[index] = max(pick, notpick)
+                return dp[index]
+
                 
         dp = [-1] * ( len(nums) + 1 )
         return sum_subsequence_not_adjacenthouse(0, nums, dp)
 
 
-# arr = [1,2,3,4,5,6,7,8,9]
-# arr = [4, 1, 6, 3, 2]
-# arr = [5, 20, 15, -2, 18]
-# arr=[0,0]
-# s = Solution()
-# print(s.rob(arr))
+arr = [1,2,3,4,5,6,7,8,9]
+arr = [4, 1, 6, 3, 2]
+arr = [5, 20, 15, -2, 18]
+#arr=[0,0]
+s = Solution()
+print(s.rob(arr))
 
 
 ###### Tabular Bottom up ########
@@ -176,8 +166,8 @@ class Solution:
 
 #arr = [1,2,3,4,5,6,7,8,9]
 #arr = [4, 1, 6, 3, 2]
-arr = [5, 20, 15, -2, 18]
-arr=[0,0]
-#arr = [1,2]
-s = Solution()
-print(s.rob(arr))    
+# arr = [5, 20, 15, -2, 18]
+# arr=[0,0]
+# #arr = [1,2]
+# s = Solution()
+# print(s.rob(arr))    
