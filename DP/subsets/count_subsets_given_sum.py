@@ -1,3 +1,12 @@
+"""
+Count subsets in an array with given target sum
+constraints 1 <= n < 1000
+
+
+The base condition will change if 
+constraints becomes 0 <= n < 1000
+"""
+
 def count_subsets(index, arr, target):
     if target == 0:
         return 1
@@ -54,18 +63,18 @@ def tabular(arr, target):
     if arr[0] <= target:
         dp[0][arr[0]] = 1
     for i in range(1, len(arr)):
-        for j in range(1, target +1):
+        for j in range(target +1):
             notpick = dp[i-1][j]
             pick = 0
-            if j <= target:
-                pick = dp[i-1][target - j]
+            if arr[i] <= j:
+                pick = dp[i-1][j - arr[i]]
             dp[i][j] = pick + notpick
     return dp[len(arr) - 1][target]
 
 arr = [1,2,3,3]
 k = 6
 
-arr = [1,1,1,1]
-k = 1
+# arr = [1,1,1,1]
+# k = 1
 
 print(tabular(arr, k))

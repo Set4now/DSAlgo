@@ -1,8 +1,10 @@
 """
-Partition an array of N positive intergers
+Can we Partition an array of N positive intergers
 into 2 subsets so that
 
 (sum of all elements in subset 1) == (sum of all elements in subset 2)
+
+return True or False
 """
 
 from typing import List

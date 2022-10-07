@@ -1,10 +1,11 @@
 def partiton_array_size(index, arr, size, output):
     if index < 0:
         if len(output) == size:
+            print(output)
             return output
         return []
     if len(output) == size:
-        #print(output)
+        print(output)
         return output
 
     
