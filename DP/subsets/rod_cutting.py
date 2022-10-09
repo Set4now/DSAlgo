@@ -22,6 +22,10 @@ def max_profit_rod_cut(n, price):
     [ ]
      1
 
+    if rodlength == 0:
+        return 0 
+    if index == 0:
+        return price[0]
 
     """
     # new_price_list = [0]
@@ -29,19 +33,19 @@ def max_profit_rod_cut(n, price):
     #     new_price_list.append(p)
     
     ######## recursive solution ##########
-    # def ans(index, rodlength):
-    #     if index == 0:
-    #         return price[0] * rodlength
+    def ans(index, rodlength):
+        if index == 0:
+            return price[0] * rodlength
 
-    #     nottake = 0 + ans(index - 1, rodlength)
-    #     take = -float("Inf")
+        nottake = 0 + ans(index - 1, rodlength)
+        take = -float("Inf")
 
-    #     curr_length = index + 1
-    #     if curr_length <= rodlength:
-    #         take = price[index] + ans(index, rodlength - curr_length)
-    #     return max(nottake, take)
+        curr_length = index + 1
+        if curr_length <= rodlength:
+            take = price[index] + ans(index, rodlength - curr_length)
+        return max(nottake, take)
 
-    # return ans(len(price) - 1, n)
+    return ans(len(price) - 1, n)
 
 
     ########### Tabulation ###########  
@@ -49,30 +53,33 @@ def max_profit_rod_cut(n, price):
     # for p in price:
     #     new_price_list.append(p)
 
-    # rod_length = n + 1
-    dp = [[0 for _ in range(n + 1)] for _ in range(n)]
+    # dp = [[0 for _ in range(n + 1)] for _ in range(n)]
    
-    # for i in range(n):
-    #     dp[i][0] = 0
-    # for length in range(n):
+    # # for i in range(n):
+    # #     dp[i][0] = 0
+    # for length in range(n+1):
     #     dp[0][length] = price[0] * length
-    for i in range(n+1):
-        dp[0][i] = price[0] * i
-    # for j in range(n+1):
-    #     dp[0][j] = price[0]
+    # # for i in range(n+1):
+    # #     dp[0][i] = price[0] * i
+    # # for j in range(n+1):
+    # #     dp[0][j] = price[0]
 
-    for index in range(1, n):
-        for rl in range(n+1):
-            nottake = 0 + dp[index - 1][rl]
-            take = -float("Inf")
-            curr_length = index + 1
-            if curr_length <= rl:
-                take = price[index] + dp[index][rl - curr_length]
-            dp[index][rl] = max(take, nottake)
-    #print(dp)
-    return dp[n - 1][n]
+    # for index in range(1, n):
+    #     for rl in range(n+1):
+    #         nottake = 0 + dp[index - 1][rl]
+    #         take = -float("Inf")
+    #         curr_length = index + 1
+    #         if curr_length <= rl:
+    #             take = price[index] + dp[index][rl - curr_length]
+    #         dp[index][rl] = max(take, nottake)
+    # #print(dp)
+    # return dp[n - 1][n]
 
 
 n = 5
 price = [2,5,7,8,100]
+
+
+n = 8
+price = [3,5,8,9,10,17,17,20]
 print(max_profit_rod_cut(n, price))
