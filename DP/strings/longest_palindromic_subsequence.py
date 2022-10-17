@@ -64,4 +64,6 @@ def longest_palindromic_subsequences(s):
     return get_lcs_string(s1, s2)
 
 s = "bbabcbcab"
+s = "abcaa"
+s = "leetcode"
 print(longest_palindromic_subsequences(s))
